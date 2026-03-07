@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #F4F6F8;
+}
+
+.appContainer {
+  display: flex;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+}
