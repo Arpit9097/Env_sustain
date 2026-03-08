@@ -7,18 +7,11 @@ export const isFirebaseAdminReady = () => isInitialized;
 try {
 
   admin.initializeApp({
-
     credential: admin.credential.cert({
-
-      projectId: process.env.FIREBASE_PROJECT_ID,
-
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-
-      privateKey:
-        process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-
+      project_id: process.env.FIREBASE_PROJECT_ID,
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
     }),
-
   });
 
   isInitialized = true;
@@ -34,18 +27,12 @@ try {
 export const verifyToken = async (token) => {
 
   if (!isInitialized) {
-
-    throw new Error(
-      "Firebase Admin not initialized"
-    );
-
+    throw new Error("Firebase Admin not initialized");
   }
 
   try {
 
-    const decodedToken =
-      await admin.auth().verifyIdToken(token);
-
+    const decodedToken = await admin.auth().verifyIdToken(token);
     return decodedToken;
 
   } catch (error) {
