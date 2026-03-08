@@ -4,9 +4,10 @@ const connectDB = async () => {
 
  try {
 
-  await mongoose.connect(
-   "mongodb://127.0.0.1:27017/sustainai"
-  );
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI environment variable is not set");
+  }
+  await mongoose.connect(process.env.MONGODB_URI);
 
   console.log("MongoDB Connected");
 
