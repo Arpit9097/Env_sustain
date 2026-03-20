@@ -7,7 +7,11 @@ const connectDB = async () => {
   if (!process.env.MONGODB_URI) {
     throw new Error("MONGODB_URI environment variable is not set");
   }
-  await mongoose.connect(process.env.MONGODB_URI);
+
+  await mongoose.connect(process.env.MONGODB_URI, {
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+  });
 
   console.log("MongoDB Connected");
 

@@ -1,64 +1,15 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { auth, googleProvider, facebookProvider } from "../firebase";
-import {
-    signInWithPopup,
-    signOut,
-    onAuthStateChanged,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-} from "firebase/auth";
+import React, { createContext, useContext } from "react";
 
-const AuthContext = createContext();
+const AuthContext = createContext({});
 
 export function useAuth() {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    function signup(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password);
-    }
-
-    function login(email, password) {
-        return signInWithEmailAndPassword(auth, email, password);
-    }
-
-    function loginWithGoogle() {
-        return signInWithPopup(auth, googleProvider);
-    }
-
-    function loginWithFacebook() {
-        return signInWithPopup(auth, facebookProvider);
-    }
-
-    function logout() {
-        return signOut(auth);
-    }
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setCurrentUser(user);
-            setLoading(false);
-        });
-
-        return unsubscribe;
-    }, []);
-
-    const value = {
-        currentUser,
-        signup,
-        login,
-        loginWithGoogle,
-        loginWithFacebook,
-        logout
-    };
-
-    return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{}}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

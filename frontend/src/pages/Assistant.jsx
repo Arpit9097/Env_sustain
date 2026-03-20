@@ -1,13 +1,11 @@
 import { useState, useContext } from "react";
 import { SustainabilityContext } from "../context/SustainabilityContext";
-import { useAuth } from "../context/AuthContext";
 import API_BASE_URL from "../api";
 import "./Assistant.css";
 
 function Assistant() {
 
   const { scores } = useContext(SustainabilityContext);
-  const { currentUser } = useAuth();
 
   const [messages, setMessages] = useState([
     {
@@ -21,7 +19,7 @@ function Assistant() {
 
   const handleSend = async () => {
 
-    if (!input.trim() || !currentUser) return;
+    if (!input.trim()) return;
 
     const userMessage = {
       sender: "user",
@@ -36,16 +34,12 @@ function Assistant() {
 
     try {
 
-      // Firebase Token
-      const token = await currentUser.getIdToken();
-
       const response = await fetch(
         `${API_BASE_URL}/chat`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             message: userMessage.text,
